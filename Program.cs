@@ -108,7 +108,11 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
+                var result = nums1.Intersect(nums2);
+                foreach (var item in result)
+                {
+                    Console.WriteLine(item);
+                }
             }
             catch (Exception)
             {
@@ -116,7 +120,10 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
-
+        //Self-reflection:
+        // Time complexity is O(N).
+        // We used the in-built function Interset function to find the intersection of two arrays.
+        
         //Question 2:
         /// <summary>
         //Given a sorted array of distinct integers and a target value, return the index if the target is found.If not, return the index where it would be if it were inserted in order.
@@ -139,8 +146,24 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //Write your Code here.
-                return -1;
+                Array.Sort(nums);
+                if (nums == null || nums.Length == 0)
+                    return -1;
+                int i = 0;
+                int j = nums.Length - 1;
+
+                while (i <= j)
+                {
+                    int m = j + (i - j) / 2;
+
+                    if (nums[m] == target)
+                        return m;
+                    else if (nums[m] < target)
+                        i = m + 1;
+                    else
+                        j = m - 1;
+                }
+                return i;
             }
             catch (Exception)
             {
@@ -163,8 +186,21 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
-                return -1;
+                Array.Sort(nums);
+                int count = 1, i;
+                for (i = nums.Length - 1; i > 0; i--)
+                {
+                    if (nums[i] == nums[i - 1])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        if (count == nums[i]) return nums[i];
+                        count = 1;
+                    }
+                }
+                return nums[i] == count ? nums[i] : -1;
             }
             catch (Exception)
             {
@@ -201,8 +237,27 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
-                return -1;
+                int[] result = new int[n + 1];
+
+                if (n < 2)
+                {
+                    return n;
+                }
+
+                result[1] = 1;
+
+                for (int i = 1; 2 * i <= n; i++)
+                {
+                    int next = 2 * i;
+                    result[next] = result[i];
+
+                    if (next + 1 <= n)
+                    {
+                        result[next + 1] = result[i] + result[i + 1];
+                    }
+                }
+
+                return result.Max();
             }
             catch (Exception)
             {
@@ -225,8 +280,23 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
-                return "";
+                List<string> list = new List<string>();
+
+                foreach (var city in paths)
+                {
+                    list.Add(city[1]);
+                }
+
+                foreach (var city in paths)
+                {
+                    if (list.Contains(city[0]))
+                    {
+                        list.Remove(city[0]);
+                    }
+
+                }
+
+                return list.Last();
             }
             catch (Exception)
             {
@@ -234,6 +304,8 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // We store all the unique city names into the list and we try removing one city at a time.
+        // so that we can find the last remaining city in the list, which will be the final destination.
 
         //Question 6:
         /// <summary>
@@ -246,12 +318,19 @@ namespace Programming_Assignment_2_Summer_2021
         //Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 
         /// </summary>
-        private static void targetSum(int[] nums, int target)
+        private static int[] targetSum(int[] nums, int target)
         {
             try
             {
-                //write your code here.
+                var dict = new Dictionary<int, int>();
 
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (dict.ContainsKey(target - nums[i]))
+                        return new int[] { dict[target - nums[i]], i };
+                    dict[nums[i]] = i;
+                }
+                return null;
             }
             catch (Exception)
             {
@@ -259,6 +338,8 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // we iterate through the whole array and check the difference between the target and the element in the array matches
+        // with the other element in the array. If matches we return the inddexes of those elements.
 
         //Question 7
         /// <summary>
@@ -285,7 +366,7 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
+                
 
             }
             catch (Exception)
@@ -318,8 +399,17 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
+                int[] output = new int[arr.Length];
+                int length = arr.Length;
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    output[(i + n) % length] = arr[i];
+                }
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    arr[i] = output[i];
 
+                }
             }
             catch (Exception)
             {
@@ -347,8 +437,22 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
-                return 0;
+                int sum = 0;
+                int maxSum = arr[0];
+
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    sum += arr[i];
+                    if (arr[i] > sum)
+                    {
+                        sum = arr[i];
+                    }
+                    if (sum > maxSum)
+                    {
+                        maxSum = sum;
+                    }
+                }
+                return maxSum;
             }
             catch (Exception)
             {
@@ -373,8 +477,16 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                //write your code here.
-                return 0;
+                int fCost1 = costs[0];
+                int fCost2 = costs[1];
+                int currentCost = 0;
+                for (int i = 2; i < costs.Length; i++)
+                {
+                    currentCost = costs[i] + Math.Min(fCost1, fCost2);
+                    fCost1 = fCost2;
+                    fCost2 = currentCost;
+                }
+                return Math.Min(fCost1, fCost2);
 
             }
             catch (Exception)
@@ -382,6 +494,6 @@ namespace Programming_Assignment_2_Summer_2021
 
                 throw;
             }
-        }
+        }// 
     }
 }

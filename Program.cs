@@ -52,7 +52,6 @@ namespace Programming_Assignment_2_Summer_2021
             cities.Add(new List<string>() { "Delhi", "London" });
             string Dcity = DestCity(cities);
             Console.WriteLine("Destination City for Given Route is : {0}", Dcity);
-
             Console.WriteLine();
 
             //Question 6
@@ -73,7 +72,6 @@ namespace Programming_Assignment_2_Summer_2021
             int[] arr = { 1, 2, 3, 4, 5, 6, 7 };
             int K = 3;
             RotateArray(arr, K);
-
             Console.WriteLine();
 
             //Question 9
@@ -170,7 +168,8 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
-
+        // We use binary search for solving this problem. We find the middle value, if it is our target we return the index.
+        // If not we update the i, j values and repeat the loop.
 
         //Question 3
         /// <summary>
@@ -208,6 +207,8 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // We first sort the given array and loop from the end of an array to check the if it is equal to it's preceding element.
+        // if yes, we increase the count by one. If the count is equal to the element value, we return that element. 
 
         //Question 4:
         /// <summary>
@@ -266,6 +267,7 @@ namespace Programming_Assignment_2_Summer_2021
             }
 
         }
+        // First we initialize an array and we generate the integers as per given rules and add to the array using loops. 
 
         //Question 5
         /// <summary>
@@ -417,6 +419,7 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // We initialize the output array and create a for loop to generate the rotated array by shifting element by n steps.
 
         //Question 9
         /// <summary>
@@ -460,6 +463,7 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // 
 
         //Question 10
         /// <summary>

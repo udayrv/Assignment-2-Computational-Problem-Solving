@@ -320,28 +320,41 @@ namespace Programming_Assignment_2_Summer_2021
         //Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 
         /// </summary>
-        private static int[] targetSum(int[] nums, int target)
+        private static void targetSum(int[] nums, int target)
         {
             try
             {
-                var dict = new Dictionary<int, int>();
-
-                for (int i = 0; i < nums.Length; i++)
+                int l = 0;
+                int r = nums.Length - 1;
+                if (nums.Length >= 2 && nums.Length <= 3 * 104)
                 {
-                    if (dict.ContainsKey(target - nums[i]))
-                        return new int[] { dict[target - nums[i]], i };
-                    dict[nums[i]] = i;
+                    while (l < r)
+                    {
+                        if (nums[l] >= -1000 && nums[l] <= 1000 && nums[r] >= -1000 && nums[r] <= 1000)
+                        {
+                            if ((nums[l] + nums[r]) < target)
+                                l++;
+                            else if ((nums[l] + nums[r]) > target)
+                                r--;
+                            else if ((nums[l] + nums[r]) == target)
+                                break;
+                        }
+                        else
+                            throw new Exception();
+                    }
+                    Console.WriteLine("{0},{1}", l + 1, r + 1);
+                    Console.ReadLine();
                 }
-                return null;
+                else
+                    throw new Exception();
             }
             catch (Exception)
             {
-
-                throw;
+                Console.WriteLine("Violation in Constraint: Exception occurred in targetSum function");
             }
         }
-        // we iterate through the whole array and check the difference between the target and the element in the array matches
-        // with the other element in the array. If matches we return the inddexes of those elements.
+        // We iterate through the array from starting and the last elements. If the sum less than target we increase the l.
+        // If it is greater than the target we decrease r by 1 and if it is equal to target we break the loop.
 
         //Question 7
         /// <summary>
@@ -368,7 +381,37 @@ namespace Programming_Assignment_2_Summer_2021
         {
             try
             {
-                
+                List<int[]> list = new List<int[]>();
+                List<int[,]> result = new List<int[,]>();
+                for (int i = 0; i < items.GetLength(0); i++)
+                {
+                    //adding the elements to list
+                    list.Add(new int[] { items[i, 0], items[i, 1] });
+                }
+                //sorting the elements
+                list.Sort((p, q) => { return (p[0] < q[0]) ? -1 : ((p[0] == q[0]) ? ((p[1] <= q[1]) ? 1 : -1) : 1); });
+                int a = list[0][0];
+                int count = 1;
+                int sum = list[0][1];
+                for (int i = 1; i < list.Count; i++)
+                {
+                    if (list[i][0] == a && count < 5)
+                    {
+                        sum += list[i][1];
+                        count += 1;
+                    }
+                    else if (list[i][0] != a)
+                    {
+                        result.Add(new int[,] { { a, sum / 5 } });
+                        Console.Write("[[" + a + "," + sum / 5 + "]" + ",");
+                        a = list[i][0];
+                        count = 1;
+                        sum = list[i][1];
+                    }
+                }
+                result.Add(new int[,] { { a, sum / 5 } });
+                Console.Write("[" + a + "," + sum / 5 + "]]");
+                Console.Write("\n");
 
             }
             catch (Exception)
@@ -377,6 +420,8 @@ namespace Programming_Assignment_2_Summer_2021
                 throw;
             }
         }
+        // We first sort the accourding to the ID and marks and we consider the top 5 marks and we take average of those top 5 marks.
+        // I have learnt how to use sorting the arrays. the time complexity is n(logN), space complexity is O(n).
 
         //Question 8
         /// <summary>
